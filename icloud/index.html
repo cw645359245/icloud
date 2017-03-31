@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html  ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/angular.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</head>
+<body ng-controller="c">
+<div class="mask" ng-show="show" ng-click="show=false"></div>
+	<div class="left">
+		<div class="left-title1">
+			<a href=""class="icloud">icloud</a>
+			<a href=""class="jia"ng-click="add()">+</a>
+		</div>
+		<div class="left-box">
+		<div class="left-title2">
+			<div class="title-left">
+				<span></span>
+			</div>
+			<div class="title-right">已计划</div>
+		</div>
+	 
+		<div class="left-title" ng-repeat="v in data" ng-click="lefts($index)"
+		ng-style="{background:$index==index?'#000':''}">
+			<div class="title-left">
+				<span ng-style="{background:v.color}"></span>
+			</div>
+			<div class="title-right">{{v.title}}</div>
+		</div>
+	 </div>
+	</div>
+	<div class="right">
+	   <input type="text"placeholder="搜索所有提醒">
+	   <div class="tixing">
+	   	<a href=""class="tixin"ng-style="{color:data[index].color}">{{data[index].title}}</a>
+	   	<a href=""class="xuan"ng-style="{color:data[index].color}" ng-click="xuan()">
+	   	选项
+	   	</a>
+	   	<div class="xuan-box" ng-show="show">
+	   		<div class="xuan-middle">
+	   			<input type="text"id="sousuo"ng-model="changetitle"
+	   			value="{{data[index].title}}"
+	   			ng-style="{color:changecolor}"
+	   			>
+	   			<h2>列表颜色</h2>
+	   			<ul class="border">
+	   				<li ng-repeat="v in color" ng-style="{background:v,borderColor:v==changecolor?v:''}"
+	   				ng-click="colorclick(v)"
+	   				></li>
+	   			</ul>
+	   		</div>
+	   		<div class="xuan-bottom">
+	   			<button class="del"ng-click="del()">删除</button>
+	   			<button class="wan" ng-click="finish(index)">完成</button>
+	   			<div class="line"></div>
+	   			<button class="back"ng-click="show=false">取消</button>
+	   		</div>
+	   	</div>
+	   </div>
+	   <div class="produce">
+	   <ul class="down" ng-click="cdown()">
+	   已完成:{{(data[index].todo|filter:{done:true}).length}}项
+
+	   </ul>
+	      <li class="cheng"ng-repeat="v in data[index].todo|filter:{done:true}"
+	      contenteditable=true
+	      ng-blur="save($event,v)";
+	      ng-show="shows";
+	         >
+	         <span class="yuan"ng-click="down(v)"ng-style="{background:data[index].color,borderColor:data[index].color}"></span>
+	      	 <span class="context  ">{{v.t}}</span>
+	      </li>
+	  
+	   <ul class="new" >
+	   未完成：{{(data[index].todo|filter:{done:false}).length}}项
+	   </ul>
+	   <li class="no-wan"
+	
+	   ng-repeat="v in data[index].todo|filter:{done:false}"
+	   contenteditable=true
+	   ng-blur="save($event,v)"
+	   
+	   >
+	   <span class="yuan"ng-click="tiao(v)"
+	   ng-style="{borderColor:data[index].color}"></span>
+	   <span class="context">{{v.t}}</span>
+	 
+	   </li >
+	   <li class="no-wan" ng-click="adds()">新项目...</li>
+	   </div>
+	</div>
+	
+</body>
+</html>
